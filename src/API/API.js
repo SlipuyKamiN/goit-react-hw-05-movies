@@ -1,0 +1,45 @@
+import axios from 'axios';
+
+export const MovieAPI = {
+  API_KEY: 'de43d67db1c628887eb86e6b3184ef59',
+  BASE_URL: `https://api.themoviedb.org/3/`,
+
+  getTrending: async () => {
+    const trendingForToday = await axios.get(
+      `${MovieAPI.BASE_URL}/trending/all/day?api_key=${MovieAPI.API_KEY}`
+    );
+
+    return await trendingForToday.data.results;
+  },
+
+  getMovieByName: async movieName => {
+    const movieByName = await axios.get(
+      `${MovieAPI.BASE_URL}search/movie?api_key=${MovieAPI.API_KEY}&query=${movieName}`
+    );
+    return movieByName.data.results;
+  },
+
+  getMovieDetails: async movieID => {
+    const movieDetails = await axios.get(
+      `${MovieAPI.BASE_URL}movie/${movieID}?api_key=${MovieAPI.API_KEY}`
+    );
+    return movieDetails.data;
+  },
+  getMovieCredits: async movieID => {
+    const movieCredits = await axios.get(
+      `${MovieAPI.BASE_URL}movie/${movieID}/credits?api_key=${MovieAPI.API_KEY}`
+    );
+    return movieCredits.data;
+  },
+
+  getMovieReviews: async movieID => {
+    const movieCredits = await axios.get(
+      `${MovieAPI.BASE_URL}movie/${movieID}/reviews?api_key=${MovieAPI.API_KEY}`
+    );
+    return movieCredits.data.results;
+  },
+};
+
+// (async () => {
+//   console.log(await MovieAPI.getMovieReviews('713704'));
+// })();
