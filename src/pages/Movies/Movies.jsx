@@ -2,6 +2,7 @@ import { MovieAPI } from 'API/API';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { Input, ResultsList, SubmitInput } from './Movies.styled';
 
 const Movies = () => {
   const [resultsList, setResultsList] = useState([]);
@@ -27,17 +28,21 @@ const Movies = () => {
   return (
     <>
       <form autoComplete="off" onSubmit={handleSubmit(handleFormSubmit)}>
-        <input type="text" {...register('searchQuery')} />
-        <input type="submit" />
+        <Input
+          type="text"
+          {...register('searchQuery')}
+          placeholder="input film name to search"
+        />
+        <SubmitInput type="submit" value="Find my film" />
       </form>
       {resultsList.length !== 0 && (
-        <ul>
+        <ResultsList>
           {resultsList.map(film => (
             <li key={film.id}>
               <Link to=":movieId">{film.title || film.name}</Link>
             </li>
           ))}
-        </ul>
+        </ResultsList>
       )}
     </>
   );

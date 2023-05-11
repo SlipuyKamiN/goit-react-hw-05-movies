@@ -1,7 +1,7 @@
 import { MovieAPI } from 'API/API';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
+import { HomeTitle, TrendingList, TrendingListItem } from './Home.styled';
 
 const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
@@ -12,14 +12,14 @@ const Home = () => {
   }, []);
   return (
     <>
-      <h1>Trending today</h1>
-      <ul>
+      <HomeTitle>Trending today</HomeTitle>
+      <TrendingList>
         {trendingMovies.map(movie => (
-          <li key={movie.id}>
+          <TrendingListItem key={movie.id}>
             <Link to={`movies/${movie.id}`}>{movie.title || movie.name}</Link>
-          </li>
+          </TrendingListItem>
         ))}
-      </ul>
+      </TrendingList>
     </>
   );
 };

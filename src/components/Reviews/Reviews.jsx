@@ -1,6 +1,7 @@
 import { MovieAPI } from 'API/API';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { ReviewsList } from './Reviews.styled';
 
 const Reviews = () => {
   const [reviewsList, setReviewsList] = useState([]);
@@ -13,7 +14,7 @@ const Reviews = () => {
   }, [movieId]);
 
   return (
-    <ul>
+    <ReviewsList>
       {reviewsList.length === 0
         ? 'We don`t have any reviews for this movie'
         : reviewsList.map(review => (
@@ -22,7 +23,7 @@ const Reviews = () => {
               <p>{review.content}</p>
             </li>
           ))}
-    </ul>
+    </ReviewsList>
   );
 };
 
