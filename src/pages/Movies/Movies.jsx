@@ -1,37 +1,48 @@
 import { MovieAPI } from 'API/API';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import { Input, ResultsList, SubmitInput } from './Movies.styled';
 
 const Movies = () => {
   const [resultsList, setResultsList] = useState([]);
-  const [query, setQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams('');
+  const query = searchParams.get('query') ?? '';
+  const [searchQuery, setSearchQuery] = useState(query);
+  const location = useLocation();
+
+  const handleInputChange = ({ target }) => {
+    if (target.value.trim() !== '') {
+      return setSearchParams({ query: target.value.trim() });
+    }
+
+    setSearchParams({});
+  };
 
   useEffect(() => {
-    if (!query) {
+    if (!searchQuery) {
       return;
     }
 
     (async () => {
-      setResultsList(await MovieAPI.getMovieByName(query));
+      setResultsList(await MovieAPI.getMovieByName(searchQuery));
     })();
-  });
+  }, [searchQuery]);
 
-  const { register, handleSubmit, reset } = useForm();
-
-  const handleFormSubmit = data => {
-    setQuery(data.searchQuery);
-    reset({ searchQuery: '' });
+  const handleFormSubmit = async event => {
+    event.preventDefault();
+    setSearchQuery(query);
   };
 
   return (
     <>
-      <form autoComplete="off" onSubmit={handleSubmit(handleFormSubmit)}>
+      <form autoComplete="off" onSubmit={handleFormSubmit}>
         <Input
           type="text"
-          {...register('searchQuery')}
+          name="query"
+          value={query}
+          onChange={handleInputChange}
           placeholder="input film name to search"
+          required
         />
         <SubmitInput type="submit" value="Find my film" />
       </form>
@@ -39,7 +50,9 @@ const Movies = () => {
         <ResultsList>
           {resultsList.map(film => (
             <li key={film.id}>
-              <Link to=":movieId">{film.title || film.name}</Link>
+              <Link to={`${film.id}`} state={{ from: location }}>
+                {film.title || film.name}
+              </Link>
             </li>
           ))}
         </ResultsList>

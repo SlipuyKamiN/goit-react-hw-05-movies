@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const MovieDetailsSection = styled.section`
+  margin-top: 15px;
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;

@@ -1,6 +1,6 @@
 import { MovieAPI } from 'API/API';
-import { useEffect, useState } from 'react';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { useEffect, useRef, useState, Suspense } from 'react';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import {
   AdditionalInfo,
   AdditionalList,
@@ -12,6 +12,8 @@ import {
 const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState({});
   const { movieId } = useParams();
+  const location = useLocation();
+  const previousPage = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     (async () => {
@@ -23,6 +25,7 @@ const MovieDetails = () => {
 
   return (
     <>
+      <Link to={previousPage.current}>{'<='} Go back</Link>
       <MovieDetailsSection>
         <img src={poster_path} alt={title} width="200px" />
         <MovieDetailsInfo>
@@ -47,7 +50,9 @@ const MovieDetails = () => {
             </AdditionalListItem>
           </AdditionalList>
         </AdditionalInfo>
-        <Outlet />
+        <Suspense fallback={<div>Please wait...</div>}>
+          <Outlet />
+        </Suspense>
       </MovieDetailsSection>
     </>
   );

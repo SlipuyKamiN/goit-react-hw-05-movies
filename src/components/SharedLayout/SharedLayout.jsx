@@ -5,6 +5,7 @@ import {
   NavList,
   NavigationLink,
 } from './SharedLayout.styled';
+import { Suspense } from 'react';
 
 const SharedLayout = () => {
   return (
@@ -21,7 +22,9 @@ const SharedLayout = () => {
           </NavList>
         </nav>
       </Header>
-      <Outlet />
+      <Suspense fallback={<div>Please wait...</div>}>
+        <Outlet />
+      </Suspense>
     </Container>
   );
 };
