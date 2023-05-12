@@ -7,25 +7,29 @@ export const useMovie = type => {
   const { movieId } = useParams();
 
   useEffect(() => {
-    if (type === 'Cast') {
-      (async () => {
-        setState(await MovieAPI.getMovieCredits(movieId));
-      })();
-      return;
-    }
+    try {
+      if (type === 'Cast') {
+        (async () => {
+          setState(await MovieAPI.getMovieCredits(movieId));
+        })();
+        return;
+      }
 
-    if (type === 'Reviews') {
-      (async () => {
-        setState(await MovieAPI.getMovieReviews(movieId));
-      })();
-      return;
-    }
+      if (type === 'Reviews') {
+        (async () => {
+          setState(await MovieAPI.getMovieReviews(movieId));
+        })();
+        return;
+      }
 
-    if (type === 'Details') {
-      (async () => {
-        setState(await MovieAPI.getMovieDetails(movieId));
-      })();
-      return;
+      if (type === 'Details') {
+        (async () => {
+          setState(await MovieAPI.getMovieDetails(movieId));
+        })();
+        return;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [movieId, type]);
 
