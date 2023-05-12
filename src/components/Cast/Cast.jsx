@@ -1,17 +1,8 @@
-import { MovieAPI } from 'API/API';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { CastList } from './Cast.styled';
+import { useMovie } from 'hooks/useMovie';
 
 const Cast = () => {
-  const [castList, setCastList] = useState([]);
-  const { movieId } = useParams();
-
-  useEffect(() => {
-    (async () => {
-      setCastList(await MovieAPI.getMovieCredits(movieId));
-    })();
-  }, [movieId]);
+  const [castList] = useMovie('Cast');
 
   return (
     <CastList>

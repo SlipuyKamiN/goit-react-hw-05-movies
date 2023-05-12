@@ -11,8 +11,8 @@ const Movies = () => {
   const location = useLocation();
 
   const handleInputChange = ({ target }) => {
-    if (target.value.trim() !== '') {
-      return setSearchParams({ query: target.value.trim() });
+    if (target.value !== '') {
+      return setSearchParams({ query: target.value });
     }
 
     setSearchParams({});
@@ -30,7 +30,7 @@ const Movies = () => {
 
   const handleFormSubmit = async event => {
     event.preventDefault();
-    setSearchQuery(query);
+    setSearchQuery(query.trim());
   };
 
   return (

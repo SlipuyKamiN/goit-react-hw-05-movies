@@ -1,17 +1,8 @@
-import { MovieAPI } from 'API/API';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMovie } from 'hooks/useMovie';
 import { ReviewsList } from './Reviews.styled';
 
 const Reviews = () => {
-  const [reviewsList, setReviewsList] = useState([]);
-  const { movieId } = useParams();
-
-  useEffect(() => {
-    (async () => {
-      setReviewsList(await MovieAPI.getMovieReviews(movieId));
-    })();
-  }, [movieId]);
+  const [reviewsList] = useMovie('Reviews');
 
   return (
     <ReviewsList>

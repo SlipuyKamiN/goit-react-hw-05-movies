@@ -1,6 +1,5 @@
-import { MovieAPI } from 'API/API';
-import { useEffect, useRef, useState, Suspense } from 'react';
-import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { useRef, Suspense } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
   AdditionalInfo,
   AdditionalList,
@@ -8,18 +7,14 @@ import {
   MovieDetailsInfo,
   MovieDetailsSection,
 } from './MovieDetails.styled';
+import { useMovie } from 'hooks/useMovie';
 
 const MovieDetails = () => {
-  const [movieDetails, setMovieDetails] = useState({});
-  const { movieId } = useParams();
+  const [movieDetails] = useMovie('Details');
+  console.log(movieDetails);
+
   const location = useLocation();
   const previousPage = useRef(location.state?.from ?? '/');
-
-  useEffect(() => {
-    (async () => {
-      setMovieDetails(await MovieAPI.getMovieDetails(movieId));
-    })();
-  }, [movieId]);
 
   const { poster_path, title, vote_average, genres, overview } = movieDetails;
 
