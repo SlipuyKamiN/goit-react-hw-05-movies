@@ -11,7 +11,6 @@ import { useMovie } from 'hooks/useMovie';
 
 const MovieDetails = () => {
   const [movieDetails] = useMovie('Details');
-  console.log(movieDetails);
 
   const location = useLocation();
   const previousPage = useRef(location.state?.from ?? '/');
