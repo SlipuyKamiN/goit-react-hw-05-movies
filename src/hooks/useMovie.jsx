@@ -30,6 +30,7 @@ export const useMovie = type => {
       }
     } catch (error) {
       console.log(error);
+      throw new Error(error.message);
     }
   }, [movieId, type]);
 
